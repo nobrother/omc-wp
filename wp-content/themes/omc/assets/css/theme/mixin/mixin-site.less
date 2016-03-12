@@ -1,0 +1,122 @@
+/*====================
+ * COLOR
+*====================*/
+@brand-color : #ffc000;		
+@brand-color1: #ef9300;
+@brand-color3: #ff931e;
+
+@fn-color-white : #fff;
+@fn-color-grey1 : #e6e6e6;
+@fn-color-grey2 : #ccc;
+@fn-color-grey3 : #999;
+@fn-color-button : #1a1a1a;
+@fn-color-title :@brand-color1;
+
+@fn-body: 'Lato', 'Open Sans', sans-serif;
+@fn-title: 'Montserrat', 'Open Sans', sans-serif;
+
+@fn-size-body: 16px;
+
+@fn-weight-body: 300;
+@fn-weight-title: 400;
+
+@bg-color-black: #000;
+@bg-color-grey1: #1a1a1a;
+@bg-color-grey2: #141414;
+@bg-color-button: @brand-color;
+
+@margin-section: 130px;
+@margin-sub-section: 90px;
+
+/*====================
+ * SCREEN
+*====================*/
+@screen-phone-max: 767px;
+@screen-pc-min: 1170px;
+@screen-tablet-min: @screen-phone-max + 1;
+@screen-tablet-max: @screen-pc-min - 1;
+
+@phone: ~"(max-width: @{screen-phone-max})";
+@tablet: ~"(min-width: @{screen-tablet-min})";
+@tablet-only: ~"(min-width: @{screen-tablet-min}) and (max-width: @{screen-tablet-max})";
+@pc: ~"(min-width: @{screen-pc-min})";
+
+/*====================
+ * BASE UNIT
+*====================*/
+@base-unit: 6px;
+
+
+/*====================
+ * SITE
+*====================*/
+.Site(){
+	/*====================
+	* GENERAL
+	*====================*/
+	body{
+		background-color: @bg-color-black;
+	}
+
+	/*====================
+	* TYPOGRAPHY
+	*====================*/
+	body {
+		font-size: @fn-size-body;
+		font-family: @fn-body;
+		font-weight: @fn-weight-body;
+		color: @fn-color-grey2;
+	}
+	
+	h1,h2,h3,h4,h5,h6{
+		font-family: @fn-title;
+		color: @brand-color;
+		font-weight: @fn-weight-title;
+	}
+	
+	div[class*=header],div[class*=title]{
+		color: @fn-color-title;
+		font-weight: @fn-weight-title;
+	}
+	
+	/*====================
+	* BUTTTON
+	*====================*/
+	.btn, .btn:hover, .btn:active, .btn:active:hover, .btn:focus {	
+		border: none;
+		border-radius: 3px;		
+		font-weight: 300;
+	}
+
+	.btn:hover {
+		opacity: 0.9;
+	}
+
+	.btn-primary, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active:hover, .btn-primary.active:hover, .open > .dropdown-toggle.btn-primary:hover, .btn-primary:active:focus, .btn-primary.active:focus, .open > .dropdown-toggle.btn-primary:focus, .btn-primary:active.focus, .btn-primary.active.focus, .open > .dropdown-toggle.btn-primary.focus {
+		color: @fn-color-button;
+		background-color: @bg-color-button;
+		font-weight: bold;
+		padding: 0;
+	}
+	
+	
+	/*====================
+	* NAV
+	*====================*/
+	#top_nav {
+		
+	}
+	
+	/*====================
+	* List
+	*====================*/
+	.list{
+		.fa{
+			color: @brand-color;
+		}
+	}
+}
+
+.card-header{
+		font-family: @fn-title;
+}

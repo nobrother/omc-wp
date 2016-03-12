@@ -1,0 +1,74 @@
+//@import "bootstraps-variables";
+@import "mixin-main";
+@import "mixin-site";
+@import "mixin-mobile";
+
+// Load mixin
+//.Miscellaneous();
+.Typography();
+.Layout();
+.List();
+.Row();
+.RatioWrap();
+.Block();
+//.Nav();
+//.Btn();
+.Divider();
+.Feature();
+.Cards();
+//.Media();
+//.PushMenu();
+//.Dropzone();
+.Site();
+
+@media @tablet {
+	
+}
+
+#top_nav {
+	background-color: #fff;
+	border-color: transparent;
+
+	// Height
+	@height: 80px;
+
+	min-height: @height;
+
+	.navbar-brand {
+		height: @height;
+
+		// Make content vertical align middle
+		.inline-block-vertical-align-middle-with-fix-height;		
+	}
+
+	@horizontal-padding: roundup(50px, @base-unit);
+
+	.navbar-nav > li {
+		&:hover a {
+			color: @brand-color;
+		}
+
+		> a {
+			height: @height;
+
+			@fs: 14px;
+			@line-height: roundup(@fs, @base-unit) + 1*@base-unit;
+			@vertical-padding: (@height - @line-height)/2;
+			font-size: @fs;
+			line-height: @line-height;
+
+			padding: @vertical-padding @6base-unit;
+		}
+
+		&.active > a {
+			background-color: transparent;
+			font-weight: 600;
+			color: @brand-color;
+		}
+
+	}
+}
+
+.navbar-header {
+	float: none;
+}
