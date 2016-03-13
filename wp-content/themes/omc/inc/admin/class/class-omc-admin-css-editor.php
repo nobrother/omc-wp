@@ -47,6 +47,7 @@ class OMC_CSS_Editor_Settings extends OMC_File_Editor_Settings {
 	function compile_less( $current_file ){
 		
 		if( 
+			is_menu_page( $this->page_id ) &&
 			!empty( $current_file ) &&
 			!empty( $current_file['extension'] ) &&
 			in_array( $current_file['extension'], array( 'css', 'less' ) )
@@ -65,7 +66,7 @@ class OMC_CSS_Editor_Settings extends OMC_File_Editor_Settings {
 					continue;
 				
 				$filename = $file['file'];
-				$min_file = OMC_CSS_THEME_DIR.'/min/'.$file['filename'].'.min.css';
+				$min_file = omc_get_min_theme_less_path( $filename );
 				
 				if ( file_exists( $filename ) && is_writeable( $filename ) )
 					$this->less()->compileFile( $filename, $min_file );
@@ -84,6 +85,10 @@ class OMC_CSS_Editor_Settings extends OMC_File_Editor_Settings {
 		if( strpos( $current_file['filename'], 'mixin-' ) === 0 ){
 						
 			foreach( scandir_recursive( OMC_CSS_THEME_DIR, true ) as $file ){ // True means with pathinfo
+				if( isset( $file['extension'] ) && $file['extension'] == 'less' )
+					$related_files[] = $file;
+			}
+			foreach( scandir_recursive( OMC_TEMPLATE_DIR, true ) as $file ){ // True means with pathinfo
 				if( isset( $file['extension'] ) && $file['extension'] == 'less' )
 					$related_files[] = $file;
 			}

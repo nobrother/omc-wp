@@ -279,7 +279,8 @@ do_action( 'omc_initiated' );
 maybe_start_session();
 
 // Template
-add_filter( 'page_template', function(){ return OMC_TEMPLATE_DIR.'/pages/page.php'; } );
+add_filter( 'page_template', function(){ return OMC_TEMPLATE_DIR.'/pages/index.php'; } );
+add_filter( 'home_template', function(){ return OMC_TEMPLATE_DIR.'/blog/index.php'; } );
 
 /**
  * Contact Form 7

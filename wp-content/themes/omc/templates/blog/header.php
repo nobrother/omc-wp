@@ -5,10 +5,12 @@
 namespace OMC\Page; 
 
 global $post;
-$slug = $post->post_name;
 
-// Load page css
-load_theme_less( 'page-'.$slug, __DIR__.'/'.$slug.'/style.less' );
+$page_obj = new Page( $post );
+
+// Load custom stylesheet
+foreach( explode( ',', $page_obj->get_custom_settings( 'stylesheet' ) ) as $stylesheet )
+	load_theme_less( '_pages/'.trim( $stylesheet ) );
 	
 // Load extra font here
 load_external_font( 'lato', 'https://fonts.googleapis.com/css?family=Lato:400,300,700,300italic' );
@@ -17,7 +19,7 @@ load_external_font( 'montserrat', 'https://fonts.googleapis.com/css?family=Monts
 //var_dump($page_obj);
 
 // Load body attribute
-add_filter( 'omc_body_attribute', function() use( $slug ){ return 'id="page-'.$slug.'"'; }, 5 );
+add_filter( 'omc_body_attribute', function() use( $page_obj ){ return 'id="page-'.$page_obj->slug.'"'; }, 5 );
 
 // Load facebook snippet
 add_action( 'omc_beginning_of_body', function(){ ?>

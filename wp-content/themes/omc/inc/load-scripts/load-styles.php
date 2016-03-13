@@ -57,11 +57,11 @@ function omc_enqueue_theme_stylesheet() {
 	wp_enqueue_style( 'omc-style', get_stylesheet_uri() );
 	
 	if( is_tablet() )
-		omc_add_theme_less( '_devices/_table' );
+		omc_add_theme_less( 'tablet', OMC_CSS_THEME_DIR.'/devices/tablet.less' );
 	else if( is_mobile() )
-		omc_add_theme_less( '_devices/_mobile' );
+		omc_add_theme_less( 'mobile', OMC_CSS_THEME_DIR.'/devices/mobile.less' );
 	else
-		omc_add_theme_less( '_devices/_pc' );
+		omc_add_theme_less( 'pc', OMC_CSS_THEME_DIR.'/devices/pc.less' );
 }
 
 /**
@@ -101,7 +101,7 @@ function omc_last_css_hook(){
  */
 add_action( 'admin_enqueue_scripts', 'omc_load_admin_styles' );
 function omc_load_admin_styles() {	
-	omc_add_theme_less( 'others/admin', array() );
+	omc_add_theme_less( 'admin', OMC_CSS_THEME_DIR.'/others/admin.less', array() );
 }
 
 
@@ -130,24 +130,35 @@ function load_external_font( $handler = '', $url = '' ){
 /**
  * Helper function to load theme css
  */
-function load_theme_less( $filename = '' ){
+function load_theme_less( $handler, $file = '' ){
 
 	// Check input
-	if( empty( $filename ) )
+	if( empty( $file ) )
 		return false;
 	
+	if( !is_array( $file ) )
+		$file = omc_pathinfo( $file );
+	
 	// Filename options
-	$file = OMC_CSS_THEME_DIR.'/'.$filename;
-	$files = omc_add_device_suffix( $file, 'less' );
+	if( empty( $file['dirname'] ) ){
+		$file['dirname'] = OMC_CSS_THEME_DIR;
+		$file['file'] = OMC_CSS_THEME_DIR.'/'.$file['basename'];
+	}
+	if( empty( $file['extention'] ) ){
+		$file['extention'] = 'less';
+		$file['file'] .= 'less';
+	}
+
+	$files = omc_add_device_suffix( $file['dirname'].'/'.$file['filename'], 'less' );
 	
 	// Choose file
 	$file = locate_file( $files );
-
+	
 	// Enqueue
 	if( !empty( $file ) ){
 	
-		add_action( 'wp_enqueue_scripts', function() use( $file ){
-			omc_add_theme_less( $file );
+		add_action( 'wp_enqueue_scripts', function() use( $handler, $file ){
+			omc_add_theme_less( $handler, $file );
 		}, 20 );
 		
 		return true;
@@ -157,7 +168,7 @@ function load_theme_less( $filename = '' ){
 /**
  * Enqueue theme less helper function
  */
-function omc_add_theme_less( $file, $depandancy = array( 'omc-style' ) ){
+function omc_add_theme_less( $handler, $file, $depandancy = array( 'omc-style' ) ){
 	$depandancy = (array) $depandancy;
 	
 	if( !is_array( $file ) )
@@ -167,12 +178,18 @@ function omc_add_theme_less( $file, $depandancy = array( 'omc-style' ) ){
 		return false;
 	
 	// Minfied path
-	$min_file = OMC_CSS_THEME_DIR.'/min/'.$file['filename'].'.min.css';
-	
-	wp_enqueue_style( $file['filename'], omc_path_to_url( $min_file ), $depandancy );
+	$min_file = omc_get_min_theme_less_path( $file['file'] );
+
+	if( file_exists( $min_file ) )
+		wp_enqueue_style( $handler, omc_path_to_url( $min_file ), $depandancy );
 }
  
-
+/**
+ * Convert theme less file path to min file path
+ */
+function omc_get_min_theme_less_path( $file = '' ){
+	return OMC_CSS_THEME_DIR.'/min/style'.md5( wp_normalize_path( $file ) ).'.css';
+}
 
 
 /**
