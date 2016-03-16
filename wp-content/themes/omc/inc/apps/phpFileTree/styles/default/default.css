@@ -31,6 +31,9 @@
 		list-style-image: url(images/directory.png);
 		padding-left: 15px;
 	}
+	.php-file-tree .pft-file {
+		padding-left: 15px;
+	}
 	.php-file-tree > .pft-directory{
 		padding-left: 0;
 	}

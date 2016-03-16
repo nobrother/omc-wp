@@ -56,10 +56,8 @@ class Page extends Post_Object {
 		self::$samples[OMC_TEMPLATE_DIR.'/pages/'.'##slug##'] = array(
 			'page-layout.php' => 'layout.php', 
 			'page-content.php' => 'content.php', 
-		);
-		self::$samples[OMC_CSS_THEME_DIR] = array(
-			'page.less' => 'page-##slug##.less',
-			'page-mobile.less' => 'page-##slug##-mobile.less',
+			'style.less' => 'style.less',
+			'style-mobile.less' => 'style-mobile.less',
 		);
 		
 		// Register custom settings

@@ -91,9 +91,9 @@ abstract class Post_Object {
 
 				// Follow default meta format: is scalar or not
 				if( is_scalar( $value ) )
-					$this->$key = $meta[$key];
+					$this->$key = $meta[$key][0];
 				else
-					$this->$key = maybe_unserialize( $meta[$key] );
+					$this->$key = maybe_unserialize( $meta[$key][0] );
 			}			
 
 			// Use default

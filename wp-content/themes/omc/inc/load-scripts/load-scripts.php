@@ -482,7 +482,7 @@ function omc_enqueue_theme_scripts() {
 	 */
 	$scripts_list = apply_filters( 'omc_enqueue_theme_scripts_list', array( 'main' => 'jquery', 'site' => 'main' ) );
 	foreach( $scripts_list as $script_name => $dependancy )
-		omc_add_theme_js( $script_name, $dependancy );
+		omc_add_theme_js( OMC_JS_THEME_DIR.'/'.$script_name.'.js', $dependancy );
 	
 	wp_localize_script( 'main', 'info',
 		array
@@ -561,7 +561,7 @@ function load_theme_js( $filename, $dependancy = 'main' ){
 	
 	// Filename options
 	$file = OMC_JS_DIR.'/'.$filename.'js';
-		
+	
 	add_action( 'wp_enqueue_scripts', function() use ( $file, $dependancy ){
 		omc_add_theme_js( $file, $dependancy );
 	}, 20 ); 

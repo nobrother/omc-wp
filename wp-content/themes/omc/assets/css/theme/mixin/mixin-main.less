@@ -16,6 +16,22 @@
 	}
 }
 
+.a-color(@normal, @hover, @focus, @active){
+	color: @normal;
+	&:hover{ color: @hover; }
+	&:focus{ color: @focus; }
+	&:active{ color: @active; }
+}
+.a-color(@normal, @hover, @focus){
+	.a-color(@normal, @hover, @focus, @focus);
+}
+.a-color(@normal, @hover){
+	.a-color(@normal, @hover, @hover, @hover);
+}
+.a-color(@normal){
+	.a-color(@normal, @normal, @normal, @normal);
+}
+
 /*====================
  * ELLIPSIS
  *====================*/

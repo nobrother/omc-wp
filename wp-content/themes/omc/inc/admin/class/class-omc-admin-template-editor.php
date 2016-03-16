@@ -135,6 +135,7 @@ class OMC_Template_Editor_Settings extends OMC_File_Editor_Settings {
 		$this->_less = new lessc;
 		$this->_less->setFormatter( 'compressed' );
 		$this->_less->addImportDir( OMC_JS_PLUGIN_DIR );
+		$this->_less->addImportDir( OMC_CSS_THEME_DIR.'/mixin' );
 		$this->register_less_custom_functions( $this->_less );
 		
 		return $this->_less;

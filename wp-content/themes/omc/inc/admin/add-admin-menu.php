@@ -9,8 +9,6 @@ add_action( 'after_setup_theme', 'omc_add_admin_menu' );
  */
 function omc_add_admin_menu() {
 
-	require_once OMC_ADMIN_CLASS_DIR . '/abstract-omc-admin.php';
-	require_once OMC_ADMIN_CLASS_DIR . '/abstract-omc-admin-file-editor.php';
 	require_once OMC_ADMIN_CLASS_DIR . '/class-omc-admin-theme-settings.php';
 	require_once OMC_ADMIN_CLASS_DIR . '/class-omc-admin-css-editor.php';
 	require_once OMC_ADMIN_CLASS_DIR . '/class-omc-admin-js-editor.php';

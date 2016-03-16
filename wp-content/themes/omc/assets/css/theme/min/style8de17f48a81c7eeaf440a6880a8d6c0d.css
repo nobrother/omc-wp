@@ -1,1 +1,1 @@
-@import "mixin-main";@import "mixin-site";@import "mixin-mobile";body{background-color:yellow;}
+.card-header{font-family:'Montserrat', 'Open Sans', sans-serif;}.row,.row-inline-block{margin-left:0 !important;margin-right:0 !important;}.row > div,.row-inline-block > div{padding:0 0 !important;}img{width:100%;}container{max-width:700px;}.navbar-brand{float:none;text-align:center;height:50px;display:block;}body{background-color:yellow;}

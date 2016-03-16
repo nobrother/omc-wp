@@ -1,27 +1,30 @@
 /*====================
  * COLOR
 *====================*/
-@brand-color : #ffc000;		
-@brand-color1: #ef9300;
-@brand-color3: #ff931e;
+@brand-color : #337ab7;		
+@brand-color1: darken(@brand-color, 10%);
+@brand-color3: darken(@brand-color, 20%);
 
 @fn-color-white : #fff;
-@fn-color-grey1 : #e6e6e6;
-@fn-color-grey2 : #ccc;
-@fn-color-grey3 : #999;
+@fn-color-grey1 : rgba(0,0,0,0.3);
+@fn-color-grey2 : rgba(0,0,0,0.44);
+@fn-color-grey3 : rgba(0,0,0,0.6);
+@fn-color-grey4 : rgba(0,0,0,0.8);
+
+@fn-color-body: @fn-color-grey3;
 @fn-color-button : #1a1a1a;
-@fn-color-title :@brand-color1;
+@fn-color-title :@fn-color-grey4;
 
 @fn-body: 'Lato', 'Open Sans', sans-serif;
 @fn-title: 'Montserrat', 'Open Sans', sans-serif;
 
 @fn-size-body: 16px;
 
-@fn-weight-body: 300;
+@fn-weight-body: 400;
 @fn-weight-title: 400;
 
 @bg-color-black: #000;
-@bg-color-grey1: #1a1a1a;
+@bg-color-grey1: #fafafa;
 @bg-color-grey2: #141414;
 @bg-color-button: @brand-color;
 
@@ -45,7 +48,7 @@
  * BASE UNIT
 *====================*/
 @base-unit: 6px;
-
+@hbase-unit: 15px;
 
 /*====================
  * SITE
@@ -55,7 +58,7 @@
 	* GENERAL
 	*====================*/
 	body{
-		background-color: @bg-color-black;
+		background-color: @bg-color-grey1;
 	}
 
 	/*====================
@@ -65,18 +68,29 @@
 		font-size: @fn-size-body;
 		font-family: @fn-body;
 		font-weight: @fn-weight-body;
-		color: @fn-color-grey2;
+		color: @fn-color-body;
 	}
 	
 	h1,h2,h3,h4,h5,h6{
 		font-family: @fn-title;
-		color: @brand-color;
+		color: @fn-color-title;
 		font-weight: @fn-weight-title;
 	}
 	
 	div[class*=header],div[class*=title]{
 		color: @fn-color-title;
 		font-weight: @fn-weight-title;
+	}
+	
+	a{
+		.a-color(@brand-color1, lighten(@brand-color1, 15%));
+		&,		
+		&:hover,
+		&:focus,
+		&:active {
+			text-decoration: none	;
+			outline: none;
+		}
 	}
 	
 	/*====================
