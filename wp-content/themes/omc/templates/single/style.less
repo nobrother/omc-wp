@@ -1,0 +1,141 @@
+@content-width: 700px;
+@img-pad: 30px;
+
+.post-header{
+	width: @content-width;
+  margin: 0 auto;
+	padding: roundup(40px, @base-unit) 0;
+}
+
+.post-thumbnail{
+	margin-bottom: 30px;
+}
+
+.post-content,
+.wp-editor.post-type-post.content{
+	width: @content-width;
+  margin: 0 auto;
+	
+	h4{
+		font-family: @fn-san-serif;
+    letter-spacing: -.02em;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 28px;
+    margin-left: -1.75px;
+    line-height: 1.22;
+    letter-spacing: -.022em;
+		color: rgba(0,0,0,.44);
+		margin-bottom: 38px;
+	}
+	
+	p{
+		font-family: @fn-serif;
+    font-size: 21px;
+    line-height: 1.58;
+    letter-spacing: -.003em;
+		margin-bottom: 38px;
+	}
+	
+	figure, .wp-caption{
+		margin: 44px 0;
+		
+		&.aligncenter{
+			margin-left: auto;
+			margin-right:	auto;
+			text-align: center;
+		}
+		
+		
+		
+		&.alignleft{
+			float: left;
+			margin: 0 @img-pad @img-pad 0;
+			
+		}
+		
+		&.alignright{
+			float: right;
+			margin: 0 0 @img-pad @img-pad;
+		}
+		
+		&.alignleft, &.alignright{
+			&.mid{
+				margin-top: @img-pad;
+			}
+			
+			&.bottom{
+				margin-bottom: 0;
+				margin-top: @img-pad;
+			}
+		}
+		
+		a{
+			display: block;
+		}
+		
+		figcaption, .wp-caption-text{
+			font-family: @fn-san-serif;
+			font-weight: 300;
+			font-feature-settings: "liga" on,"lnum" on;
+			-moz-font-feature-settings: "liga" on,"lnum" on;
+			-webkit-font-feature-settings: "liga" on,"lnum" on;
+			font-size: 14px;
+			line-height: 1.4;
+			color: rgba(0,0,0,.6);
+			letter-spacing: 0;
+			position: relative;
+			width: 100%;
+			margin-top: 10px;
+			outline: 0;
+			text-align: center;
+		}
+	}
+	
+	hr{
+		margin-top: 52px;
+		margin-bottom: 42px;
+		display: block;
+    border: 0;
+    text-align: center;
+		height: 0;
+		
+		&:before{
+			content: '...';
+			display: inline-block;
+			margin-left: .6em;
+			color: rgba(0,0,0,.6);
+			position: relative;
+			top: -30px;
+			font-family: @fn-serif;
+			font-style: italic;
+			font-size: 28px;
+			letter-spacing: .6em;
+		}
+	}
+	
+	blockquote{
+		font-family: medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.58;
+    letter-spacing: -.003em;
+		border-left: 3px solid rgba(0,0,0,.8);
+    padding-left: 20px;
+    margin-left: -23px;
+    padding-bottom: 3px;
+	}
+	
+	.dropcap{
+		font-size: 65px;
+    float: left;
+    line-height: 1.0;
+    margin-right: 10px;
+	}
+}
+
+.post-actions, .post-social, .post-meta, .edit-link{
+	padding: 10px 0;
+  border-top: 1px solid #e5e5e5;
+}

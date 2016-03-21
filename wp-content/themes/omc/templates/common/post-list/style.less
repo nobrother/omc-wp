@@ -1,0 +1,45 @@
+.post-list-item{
+	margin-bottom: roundup(30px, @base-unit);
+	
+	background: #fff;
+	box-shadow: 0 1px 4px rgba(0,0,0,.04);
+	border: 1px solid rgba(0,0,0,.09);
+	border-radius: 3px;
+	padding: 30px 20px;
+}
+
+.post-list-item-header{
+	margin-bottom: roundup(15px, @base-unit);
+}
+
+.post-list-item-body{
+	margin-bottom: roundup(20px, @base-unit);
+}
+
+.post-list-item-thumbnail{
+	display: block;
+	margin-bottom: roundup(15px, @base-unit);
+}
+
+.post-list-item-footer{
+	time, address{
+		display: inline-block;
+		margin-bottom: 0;
+	}
+	
+	.vcard{
+		margin-bottom: roundup(15px, @base-unit);
+	}
+	
+	.edit-link{
+		display: block;
+		margin-top: roundup(15px, @base-unit);
+		font-style: italic;
+	}
+}
+
+.pagination{
+	.omission a{
+		border-width: 0 1px;
+	}
+}

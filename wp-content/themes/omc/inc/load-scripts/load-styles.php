@@ -57,11 +57,11 @@ function omc_enqueue_theme_stylesheet() {
 	wp_enqueue_style( 'omc-style', get_stylesheet_uri() );
 	
 	if( is_tablet() )
-		omc_add_theme_less( 'tablet', OMC_CSS_THEME_DIR.'/devices/tablet.less' );
+		wp_enqueue_style( 'omc-tablet', omc_path_to_url( OMC_CSS_THEME_DIR.'/min/tablet.css' ) );
 	else if( is_mobile() )
-		omc_add_theme_less( 'mobile', OMC_CSS_THEME_DIR.'/devices/mobile.less' );
+		wp_enqueue_style( 'omc-mobile', omc_path_to_url( OMC_CSS_THEME_DIR.'/min/mobile.css' ) );
 	else
-		omc_add_theme_less( 'pc', OMC_CSS_THEME_DIR.'/devices/pc.less' );
+		wp_enqueue_style( 'omc-pc', omc_path_to_url( OMC_CSS_THEME_DIR.'/min/pc.css' ) );
 }
 
 /**

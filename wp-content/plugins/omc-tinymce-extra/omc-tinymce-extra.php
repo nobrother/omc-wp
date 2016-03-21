@@ -39,29 +39,74 @@ class main{
 		
 		// Add menubar
 		$init['menubar'] = true;
-		
-		// Format array
-		$headings = array(
-			array( 'title' => 'H1 Intro Head', 'block' => 'h1', 'classes' => 'fs-intro-head'),
+		$init['wpautop'] = false;
+		$style_formats = array(
+			array(  
+				'title' => 'Headings',
+				'items' => array(
+					array( 'title' => 'Heading 1', 'format' => 'h1' ),
+					array( 'title' => 'Heading 2', 'format' => 'h2' ),
+					array( 'title' => 'Heading 3', 'format' => 'h3' ),
+					array( 'title' => 'Heading 4', 'format' => 'h4' ),
+					array( 'title' => 'Heading 5', 'format' => 'h5' ),
+					array( 'title' => 'Heading 6', 'format' => 'h6' ),
+				)
+			),
+			array(
+				'title' => 'Inline',
+				'items' => array(
+					array( 'title' => 'Dropcap', 				'inline' => 'span', 				'classes' => 'dropcap' ),
+					array( 'title' => 'Bold', 					'icon' => 'bold', 					'format' => 'bold' ),
+					array( 'title' => 'Italic', 				'icon' => 'italic', 				'format' => 'italic' ),
+					array( 'title' => 'Underline', 			'icon' => 'underline', 			'format' => 'underline' ),
+					array( 'title' => 'Strikethrough', 	'icon' => 'strikethrough',	'format' => 'strikethrough' ),
+					array( 'title' => 'Superscript', 		'icon' => 'superscript', 		'format' => 'superscript' ),
+					array( 'title' => 'Subscript', 			'icon' => 'subscript', 			'format' => 'subscript' ),
+					array( 'title' => 'Code', 					'icon' => 'code', 					'format' => 'code' ),
+				)
+			),
+			array(
+				'title' => 'Blocks',
+				'items' => array(
+					array( 'title' => 'Paragraph', 		'format' => 'p' ),
+					array( 'title' => 'Blockquote', 	'format' => 'blockquote' ),
+					array( 'title' => 'Div', 					'format' => 'div' ),
+					array( 'title' => 'Pre', 					'format' => 'pre' ),
+				)
+			),
+			array(
+				'title' => 'Alignment',
+				'items' => array(
+					array( 'title' => 'Left', 		'icon' => 'alignleft', 		'format' => 'alignleft' ),
+					array( 'title' => 'Center', 	'icon' => 'aligncenter', 	'format' => 'aligncenter' ),
+					array( 'title' => 'Right', 		'icon' => 'alignright', 	'format' => 'alignright' ),
+					array( 'title' => 'Justify',	'icon' => 'alignjustify', 'format' => 'alignjustify' ),
+				)
+			)
 		);
 		
-		// Add typography
-		$init['typography'] = json_encode( array(
-			array( 
-				'title' => 'Headings',
-				'items' => $headings,
-			),
-		));
-		
-		// Add Headings
-		$init['headings'] = json_encode( $headings );
+		// Insert the array, JSON ENCODED, into 'style_formats'
+		$init['style_formats'] = json_encode( $style_formats );
 		
 		return $init;
 	}
 	
 	// Hook: 2nd row buttons
 	function buttons_2( $buttons ){
-		$buttons = array( 'typography', 'headings','underline', 'alignjustify', 'forecolor', 'pastetext', 'removeformat', 'charmap', 'outdent', 'indent', 'undo', 'redo', 'removeformat' );
+		$buttons = array( 
+			'styleselect', 
+			'underline', 
+			'alignjustify', 
+			'forecolor', 
+			'pastetext', 
+			'removeformat', 
+			'charmap', 
+			'outdent', 
+			'indent', 
+			'undo', 
+			'redo', 
+			'wp_help' 
+		);
 		return $buttons;
 	}
 	

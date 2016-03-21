@@ -68,6 +68,9 @@ class lessc {
 
 	// attempts to find the path of an import url, returns null for css files
 	protected function findImport($url) {
+		
+		if ($this->fileExists($url))
+			return $url;
 		foreach ((array)$this->importDir as $dir) {
 			$full = $dir.(substr($dir, -1) != '/' ? '/' : '').$url;
 			if ($this->fileExists($file = $full.'.less') || $this->fileExists($file = $full)) {
@@ -92,18 +95,20 @@ class lessc {
 	}
 
 	protected function tryImport($importPath, $parentBlock, $out) {
+		
 		if ($importPath[0] == "function" && $importPath[1] == "url") {
 			$importPath = $this->flattenList($importPath[2]);
 		}
 
 		$str = $this->coerceString($importPath);
+		
 		if ($str === null) return false;
 
 		$url = $this->compileValue($this->lib_e($str));
 
 		// don't import if it ends in css
 		if (substr_compare($url, '.css', -4, 4) === 0) return false;
-
+		
 		$realPath = $this->findImport($url);
 
 		if ($realPath === null) return false;
@@ -126,7 +131,7 @@ class lessc {
 				$prop[1]->parent = $parentBlock;
 			}
 		}
-
+		
 		// copy mixins into scope, set their parents
 		// bring blocks from import into current block
 		// TODO: need to mark the source parser	these came from this file
@@ -145,7 +150,7 @@ class lessc {
 
 		list($top, $bottom) = $this->sortProps($root->props, true);
 		$this->compileImportedProps($top, $parentBlock, $out, $parser, $dir);
-
+		
 		return array(true, $bottom, $parser, $dir);
 	}
 
@@ -157,7 +162,7 @@ class lessc {
 		// TODO: this is because the importDir api is stupid
 		$this->importDir = (array)$this->importDir;
 		array_unshift($this->importDir, $importDir);
-
+		
 		foreach ($props as $prop) {
 			$this->compileProp($prop, $block, $out);
 		}
@@ -743,6 +748,7 @@ class lessc {
 			$out->lines[] = $prop[1];
 			break;
 		case "import";
+			
 			list(, $importPath, $importId) = $prop;
 			$importPath = $this->reduce($importPath);
 

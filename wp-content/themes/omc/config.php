@@ -22,8 +22,8 @@ $theme_config = array(
 		'frontend' => array(
 			'inc/structure/header.php',
 			'inc/structure/footer.php',
-			'templates/common/widgets/tags.php',			
-			'templates/common/helper/template-tags.php',
+			'templates/common/widgets/tags-cloud/tags-cloud.php',
+			'templates/common/comments/class-walker-comments.php',
 		),
 		'backend' => array(
 			'inc/admin/functions.php',
@@ -37,6 +37,8 @@ $theme_config = array(
 		'ajax' => array(
 			'inc/post-type/abstract-post-type-ajax.php',
 			'inc/post-type/post-ajax.php',
+			'inc/post-type/page-ajax.php',
+			'inc/post-type/admin/page-ajax.php',
 		),
 	),
 );

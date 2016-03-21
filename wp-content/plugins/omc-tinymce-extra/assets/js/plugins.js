@@ -7,20 +7,14 @@
 				wp = global.wp,
 				hasWpautop = ( wp && wp.editor && wp.editor.autop && editor.getParam( 'wpautop', true ) );
 		
-		// Create Typography menu
-		editor.addButton('typography', {
-			type: 'menubutton',
-			text: 'Typography',
-			menu: stylingMenu('typography')
-		});
-		
 		// Create Headings menu
+		/*
 		editor.addButton('headings', {
 			type: 'menubutton',
 			text: 'Headings',
 			menu: stylingMenu('headings')
 		});
-		
+		*/
 		
 		// Helper: Create styling menu
 		function stylingMenu(name) {

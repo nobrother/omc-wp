@@ -15,6 +15,9 @@
 @fn-color-button : #1a1a1a;
 @fn-color-title :@fn-color-grey4;
 
+@fn-serif: Georgia,Cambria,"Times New Roman",Times,serif;
+@fn-san-serif: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+
 @fn-body: 'Lato', 'Open Sans', sans-serif;
 @fn-title: 'Montserrat', 'Open Sans', sans-serif;
 
@@ -25,7 +28,8 @@
 
 @bg-color-black: #000;
 @bg-color-grey1: #fafafa;
-@bg-color-grey2: #141414;
+@bg-color-grey2: rgba(255,255,255,0.97);
+@bg-color-body: @bg-color-grey1;
 @bg-color-button: @brand-color;
 
 @margin-section: 130px;
@@ -58,7 +62,7 @@
 	* GENERAL
 	*====================*/
 	body{
-		background-color: @bg-color-grey1;
+		background-color: @bg-color-body;
 	}
 
 	/*====================

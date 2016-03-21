@@ -3,9 +3,8 @@
 namespace OMC\Post;
 
 global $post;
-
 $post_obj = new Post( $post );
-
+$data = array( 'post_obj' => $post_obj );
 ?>
 
 <article 
@@ -22,7 +21,7 @@ $post_obj = new Post( $post );
 		?>
 	</header>
 	
-	<?php omc_post_thumbnail(); ?>
+	<?php omc_inject( 'post-thumbnail' ) ?>
 
 	<div class="post-list-item-body">
 		<?php omc_post_excerpt(); ?>
@@ -30,59 +29,14 @@ $post_obj = new Post( $post );
 
 	<footer class="post-list-item-footer">
 		
-		<div class="post-item-actions">
-			<a class="js-post-like post-item-like <?php $post_obj->is_liked() && _e( 'active' ) ?>" href="#">
-				<span class="like"><i class="fa fa-thumbs-o-up"></i> Like</span>
-				<span class="unlike"><i class="fa fa-thumbs-up"></i> Unlike</span>
-			</a>
-		</div>
+		<?php omc_inject( 'post-meta', true, $data ) ?>
 		
-		<!-- Likes, Comment Count, Share Count -->
-		<div class="post-item-meta">			
-			<!-- Like count-->
-			<span class="post-item-like-count">
-				<span class="like-count js-post-like-count">
-				<?php	
-					if( !is_wp_error( $liked = $post_obj->is_liked() ) ){ 
-						 esc_html_e( $post_obj->like_count );
-					} else {
-						echo 0;
-					}
-				?>
-				</span>
-				<span>like(s)</span>
-			</span><!-- / Like count -->			
-		</div><!-- / Likes, Comment Count, Share Count -->
+		<?php omc_inject( 'post-actions', true, $data ) ?>
 		
-		<div class="byline vcard">
-			<address class="author">
-				<a rel="author" class="url fn n" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) ?>">
-					<?php the_author() ?>
-				</a>
-			</address> 
-			on 
-			<time class="entry-date published updated" datetime="<?php esc_attr_e( get_the_date( 'c' ) ) ?>">
-				<?php echo get_the_date() ?>
-			</time>
-		</div>
+		<!-- Likes counts, Comment Count, Share Count -->
+		<?php omc_inject( 'post-social', true, $data ) ?>
+		<!-- / Likes counts, Comment Count, Share Count -->
 		
-		<div class="category-links">
-			<?php echo get_the_category_list( ', ' ); ?>
-		</div>
-		
-		<div class="tag-links">
-			<?php echo get_the_tag_list( '', ', ' ); ?>
-		</div>
-		<?php 			
-			edit_post_link(
-				sprintf(
-					/* translators: %s: Name of current post */
-					__( 'Edit<span class="screen-reader-text"> "%s"</span>', 'twentysixteen' ),
-					get_the_title()
-				),
-				'<span class="edit-link">',
-				'</span>'
-			);
-		?>
+		<?php edit_post_link( sprintf('Edit "%s"',	get_the_title()	), '<div class="edit-link">',	'</div>' ) ?>
 	</footer>
 </article>

@@ -345,17 +345,23 @@ function omc_path_to_url( $path = '' ) {
 function omc_is_ajax(){
  
 	// Is in ajax
-	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ){		 
-	 if( isset( $_GET['frontend_ajax'] ) && $_GET['frontend_ajax'] == OMC_FRONTEND_AJAX_HASH )
-		 return 'front';
-	 else
-		 return 'back';		 
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ){	
+		if( isset( $_REQUEST['action'] ) && strpos( $_REQUEST['action'], 'omc' ) === 0 ){
+			if( isset( $_GET['frontend_ajax'] ) && $_GET['frontend_ajax'] == OMC_FRONTEND_AJAX_HASH )
+				return 'front';
+			else
+				return 'back';	
+		} else {
+			return 'none_omc_ajax';
+		}	 	 
 	}
 
 	// Not in ajax
 	else
 	 return 'none';
-
+}
+function is_omc_ajax(){
+	return in_array( omc_is_ajax(), array( 'front', 'back' ) );
 }
 
 /* 
@@ -368,9 +374,6 @@ function scandir_recursive( $dir, $is_pathinfo = false, $preg_pattern = false, &
 			
 			if( $filename != '.' 
 					&& $filename != '..' 
-					&& ( $preg_pattern === false 
-							 || preg_match( $preg_pattern, $filename )
-						  ) 
 			){
 				
 				$path = wp_normalize_path( $dir.'/'.$filename );
@@ -379,6 +382,8 @@ function scandir_recursive( $dir, $is_pathinfo = false, $preg_pattern = false, &
 					scandir_recursive( $path, $is_pathinfo, $preg_pattern, $results );					
 				
 				else {
+					if( $preg_pattern !== false && !preg_match( $preg_pattern, $path ) )
+						continue;		
 					if( $is_pathinfo )
 						$results[] = omc_pathinfo( $path );
 					else
@@ -388,4 +393,109 @@ function scandir_recursive( $dir, $is_pathinfo = false, $preg_pattern = false, &
     }
 
     return $results;
+}
+
+/* 
+ * Generate common less object
+ */
+function less(){
+	if( !class_exists( 'lessc' ) )
+		require_once OMC_APPS_DIR.'/lessc/lessc.inc.php';
+		
+	$less = new lessc;
+	$less->setFormatter( 'compressed' );		
+	
+	/*==========================
+	 * Register custom function
+	 *==========================*/
+	// roundup(@var, @multiple)
+	$less->registerFunction( 'roundup' , function( $arg ) {
+		
+		// Exit is arguement is not correct
+		if( empty( $arg[2] ) || empty( $arg[2][0] ) || empty( $arg[2][1] ) || 
+				empty( $arg[2][0][0] ) || empty( $arg[2][1][0] ) || 
+				$arg[2][0][0] !== 'number' || $arg[2][1][0] !== 'number' 
+			)
+			return $arg;
+		
+		// Get argument
+		$var = $arg[2][0];
+		$multiple = floor( $arg[2][1][1] ); // Make sure multiple is integer
+		
+		// Output
+		list( $type, $value, $unit ) = $var;
+		return array( $type, $multiple * ceil( $value / $multiple ), $unit );
+	} );
+	
+	return $less;
+}
+
+/* 
+ * Compile Less in OMC style
+ */
+function compile_less(){
+	
+	// General mixin
+	$pc_style = $mobile_style = $tablet_style = array( 
+		OMC_CSS_THEME_DIR.'/mixin/mixin-main.less', 
+		OMC_CSS_THEME_DIR.'/mixin/mixin-site.less',
+	);
+	
+	// Mixin
+	$pc_style[] = OMC_CSS_THEME_DIR.'/mixin/mixin-pc.less';
+	$mobile_style[] = OMC_CSS_THEME_DIR.'/mixin/mixin-mobile.less';
+	$tablet_style[] = OMC_CSS_THEME_DIR.'/mixin/mixin-tablet.less';
+	
+	// Devices
+	$pc_style[] = OMC_CSS_THEME_DIR.'/devices/pc.less';
+	$mobile_file = OMC_CSS_THEME_DIR.'/devices/mobile.less';
+	$tablet_file = OMC_CSS_THEME_DIR.'/devices/tablet.less';
+	if( file_exists( $mobile_file ) ){
+		$mobile_style[] = $mobile_file;
+		$tablet_style[] = file_exists( $tablet_file ) ? $tablet_file : $mobile_file;						
+	} else {
+		$mobile_style[] = OMC_CSS_THEME_DIR.'/devices/pc.less';
+		$tablet_style[] = file_exists( $tablet_file ) ? $tablet_file : OMC_CSS_THEME_DIR.'/devices/pc.less';
+	} 
+	
+	// Templates
+	$files = scandir_recursive( OMC_TEMPLATE_DIR, true, '/style\.less$/' );
+	
+	foreach( $files as $file ){
+		$pc_style[] = $file['file'];
+		$mobile_file = $file['dirname'].'/'.$file['filename'].'-mobile.less';
+		$tablet_file = $file['dirname'].'/'.$file['filename'].'-tablet.less';
+		if( file_exists( $mobile_file ) ){
+			$mobile_style[] = $mobile_file;
+			$tablet_style[] = file_exists( $tablet_file ) ? $tablet_file : $mobile_file;						
+		} else {
+			$mobile_style[] = $file['file'];
+			$tablet_style[] = file_exists( $tablet_file ) ? $tablet_file : $file['file'];					
+		}				
+	}
+	
+	// Generate pc.css, mobile.css, tablet.css
+	foreach( array( 'pc', 'mobile', 'tablet' ) as $type ){
+		$var = $type.'_style';
+		$input_file = OMC_CSS_THEME_DIR.'/cache/'.$type.'.less';
+		$cache_file = OMC_CSS_THEME_DIR.'/cache/'.$type.'.less.cache';
+		$output_file = OMC_CSS_THEME_DIR.'/min/'.$type.'.css';
+		
+		$content = '@import "'.implode( '";'.PHP_EOL.'@import "', $$var ).'";';
+		if( file_exists( $input_file ) && file_get_contents( $input_file ) !== $content || !file_exists( $input_file ) )
+			file_put_contents( $input_file, $content );
+		
+		if ( file_exists( $cache_file ) ) {
+			$cache = unserialize( file_get_contents( $cache_file ) );
+		} else {
+			$cache = $input_file;
+		}
+
+		$new_cache = less()->cachedCompile( $cache );
+
+		if ( !is_array( $cache ) || $new_cache['updated'] > $cache['updated'] ) {
+			file_put_contents( $cache_file, serialize( $new_cache ) );
+			file_put_contents( $output_file, $new_cache['compiled'] );
+		}
+	}
 }

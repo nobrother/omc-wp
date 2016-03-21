@@ -53,11 +53,10 @@ class Page extends Post_Object {
 		parent::__construct( $id );
 		
 		// Define sample
-		self::$samples[OMC_TEMPLATE_DIR.'/pages/'.'##slug##'] = array(
+		self::$samples[OMC_TEMPLATE_DIR.'/page/'.'##slug##'] = array(
 			'page-layout.php' => 'layout.php', 
 			'page-content.php' => 'content.php', 
-			'style.less' => 'style.less',
-			'style-mobile.less' => 'style-mobile.less',
+			'page-style.less' => 'style.less',
 		);
 		
 		// Register custom settings
@@ -155,31 +154,3 @@ class Page extends Post_Object {
 		}		
 	}	
 }
-
-
-// Frontend ajax
-if( omc_is_ajax() == 'front' && isset( $_POST['ajax_hash'] ) && $_POST['ajax_hash'] == Page::HASH ):
-	
-/*
- * Ajax
- */
-class Ajax extends Post_Object_Ajax {
-	
-	public $post_type = 'page';
-	protected $action_prefix = 'omc_page_';
-	
-	/*
-	 * Construct
-	 */
-	function __construct(){		
-
-		// Add action hook
-		//$this->add_ajax( 'add_video' );
-	}
-	
-}
-
-endif;
-
-// Load page hook
-require_once 'page-hooks.php';

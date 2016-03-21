@@ -21,16 +21,23 @@ $timezone = new DateTimeZone( timezone_name_from_abbr( '', get_option('gmt_offse
  ******************/
 require_once 'config.php';
 global $theme_config;
+
+// Load for general
 foreach( $theme_config['loader']['general'] as $file )
 	require_once $file;
+
+// Load for frontend
 if( !is_admin()	|| omc_is_ajax() === 'front' ){
 	foreach( $theme_config['loader']['frontend'] as $file )
 		require_once $file;
-} else {
+}
+
+// Load for backend
+if( is_admin() && omc_is_ajax() !== 'front' ) {
 	foreach( $theme_config['loader']['backend'] as $file )
 		require_once $file;
 }
-if( omc_is_ajax() !== 'none' ){
+if( is_omc_ajax() ){
 	foreach( $theme_config['loader']['ajax'] as $file )
 		require_once $file;
 }
@@ -195,14 +202,35 @@ do_action( 'omc_initiated' );
 // Start session
 maybe_start_session();
 
-// Template
-add_filter( 'page_template', function(){ return OMC_TEMPLATE_DIR.'/page/index.php'; } );
-add_filter( 'home_template', function(){ return OMC_TEMPLATE_DIR.'/blog/index.php'; } );
-add_filter( 'category_template', function(){ return OMC_TEMPLATE_DIR.'/category/index.php'; } );
-add_filter( 'tag_template', function(){ return OMC_TEMPLATE_DIR.'/tag/index.php'; } );
-add_filter( 'taxonomy_template', function(){ return OMC_TEMPLATE_DIR.'/taxonomy/index.php'; } );
-add_filter( 'search_template', function(){ return OMC_TEMPLATE_DIR.'/search/index.php'; } );
-
+/*
+ * Choose template to loader
+ * Apply to filter '{$type}_template'
+ * Possible values for `$type` include: 'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date',
+ * 'home', 'front_page', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
+ */
+$template_types = array(
+	'index', 
+	'404', 
+	'archive', 
+	'author', 
+	'category', 
+	'tag', 
+	'taxonomy', 
+	'date', 
+	'home', 
+	'front_page', 
+	'page', 
+	'paged', 
+	'search', 
+	'single', 
+	'singular', 
+	'attachment',
+	'comments',
+);
+foreach( $template_types as $type ){
+	add_filter( $type.'_template', 'omc_template_loader' );
+}
+unset( $template_types );
 
 /**
  * Contact Form 7
