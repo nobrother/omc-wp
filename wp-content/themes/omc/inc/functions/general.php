@@ -492,7 +492,7 @@ function compile_less(){
 		}
 
 		$new_cache = less()->cachedCompile( $cache );
-
+		
 		if ( !is_array( $cache ) || $new_cache['updated'] > $cache['updated'] ) {
 			file_put_contents( $cache_file, serialize( $new_cache ) );
 			file_put_contents( $output_file, $new_cache['compiled'] );

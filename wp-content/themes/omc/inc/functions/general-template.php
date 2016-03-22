@@ -94,6 +94,26 @@ function omc_inject( $name, $with_device_suffix = true, $data = array() ){
 }
 
 /*
+ * Choose singular and prural
+ */
+function _s( $number = 0, $singular, $prural = '', $zero = '' ){
+	if( empty( $prural ) )
+		$prural = $singular;
+	if( empty( $zero ) )
+		$zero = "No $singular";
+	
+	$number = (double) $number;
+	
+	if( $number == 0 )
+		echo $zero;
+	elseif( $number == 1 )
+		echo "$number $singular";
+	else
+		echo "$number $prural";
+	
+}
+ 
+/*
  * Choose template to loader
  * Apply to filter '{$type}_template'
  * Possible values for `$type` include: 'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date',
