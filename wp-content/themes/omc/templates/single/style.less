@@ -8,13 +8,23 @@
 }
 
 .post-thumbnail{
+	margin-left: auto;
+	margin-right: auto;
 	margin-bottom: 30px;
+	width: @content-width;
 }
 
 .post-content,
 .wp-editor.post-type-post.content{
-	width: @content-width;
-  margin: 0 auto;
+	max-width: 750px;
+	margin: 0 auto;
+	
+	h4, p, figure, .wp-caption, hr, blockquote {
+		width: @content-width;
+		margin-left: auto;
+		margin-right: auto;
+	}	
+  
 	
 	h4{
 		font-family: @fn-san-serif;
@@ -39,35 +49,12 @@
 	
 	figure, .wp-caption{
 		margin: 44px 0;
+		max-width: @content-width;
 		
-		&.aligncenter{
-			margin-left: auto;
-			margin-right:	auto;
-			text-align: center;
-		}
-		
-		
-		
-		&.alignleft{
-			float: left;
-			margin: 0 @img-pad @img-pad 0;
-			
-		}
-		
-		&.alignright{
-			float: right;
-			margin: 0 0 @img-pad @img-pad;
-		}
-		
-		&.alignleft, &.alignright{
-			&.mid{
-				margin-top: @img-pad;
-			}
-			
-			&.bottom{
-				margin-bottom: 0;
-				margin-top: @img-pad;
-			}
+		img{
+			max-width: @content-width;
+			width: 100%;
+			height: auto;
 		}
 		
 		a{
@@ -89,6 +76,36 @@
 			margin-top: 10px;
 			outline: 0;
 			text-align: center;
+		}
+	}
+	
+	figure, .wp-caption, img{
+		&.aligncenter{
+			margin-left: auto;
+			margin-right:	auto;
+			text-align: center;
+		}
+		
+		&.alignleft{
+			float: left;
+			margin: 0 @img-pad @img-pad 0;
+			
+		}
+		
+		&.alignright{
+			float: right;
+			margin: 0 0 @img-pad @img-pad;
+		}
+		
+		&.alignleft, &.alignright{
+			&.mid{
+				margin-top: @img-pad;
+			}
+			
+			&.bottom{
+				margin-bottom: 0;
+				margin-top: @img-pad;
+			}
 		}
 	}
 	

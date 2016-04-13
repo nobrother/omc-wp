@@ -182,6 +182,34 @@ add_filter( 'excerpt_more', 'omc_excerpt_more' );
 add_filter( 'the_content_more_link', 'omc_excerpt_more' );
 add_filter( 'wp_trim_excerpt', 'omc_excerpt_add_more', 10, 2 );
 
+/*
+ * Remove img caption inline style
+ */
+function omc_img_caption_shortcode_width( $width ){
+	//return 0;
+	return $width;
+}
+add_filter( 'img_caption_shortcode_width', 'omc_img_caption_shortcode_width' );
+
+/**
+ * Allow links to have a target attribute.
+ */
+function omc_wp_kses_allowed_html( $tags, $context ) {
+	$tags['a']['target'] = true;
+	return $tags;
+}
+add_filter( 'wp_kses_allowed_html', 'omc_wp_kses_allowed_html', 10, 2 );
+
+/**
+ * Add target _blank to edit post link
+ */
+function omc_edit_post_link( $link ){
+	$pos = strpos( $link, '<a' );
+	if( $pos === 0 )
+		return substr_replace( $link, ' target="_blank"', $pos + 2, 0 );
+	return $link;
+}
+add_filter( 'edit_post_link', 'omc_edit_post_link' );
 /**
  * Prints HTML with meta information for the categories, tags.
  */

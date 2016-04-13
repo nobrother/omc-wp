@@ -445,6 +445,7 @@ function compile_less(){
 	$pc_style[] = OMC_CSS_THEME_DIR.'/mixin/mixin-pc.less';
 	$mobile_style[] = OMC_CSS_THEME_DIR.'/mixin/mixin-mobile.less';
 	$tablet_style[] = OMC_CSS_THEME_DIR.'/mixin/mixin-tablet.less';
+	$admin_style[] = OMC_CSS_THEME_DIR.'/others/admin.less';
 	
 	// Devices
 	$pc_style[] = OMC_CSS_THEME_DIR.'/devices/pc.less';
@@ -475,7 +476,7 @@ function compile_less(){
 	}
 	
 	// Generate pc.css, mobile.css, tablet.css
-	foreach( array( 'pc', 'mobile', 'tablet' ) as $type ){
+	foreach( array( 'pc', 'mobile', 'tablet', 'admin' ) as $type ){
 		$var = $type.'_style';
 		$input_file = OMC_CSS_THEME_DIR.'/cache/'.$type.'.less';
 		$cache_file = OMC_CSS_THEME_DIR.'/cache/'.$type.'.less.cache';

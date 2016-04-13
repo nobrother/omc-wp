@@ -15,7 +15,7 @@ the_post();
 >
 	<?php omc_inject( 'post-thumbnail' ); ?>
 
-	<div class="post-content">
+	<div class="post-content clearfix">
 		<?php the_content(); ?>
 	</div>
 
@@ -30,7 +30,7 @@ the_post();
 		<!-- / Likes counts, Comment Count, Share Count -->
 
 		<?php 			
-			edit_post_link( sprintf('Edit "%s"',	get_the_title()	), '<div class="edit-link">',	'</div>' );
+			edit_post_link( sprintf('Edit "%s"', get_the_title() ), '<div class="edit-link" target="_blank">', '</div>' );
 			
 			// If comments are open or we have at least one comment, load up the comment template.
 			if ( comments_open() || get_comments_number() ) {

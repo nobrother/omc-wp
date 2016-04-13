@@ -531,7 +531,15 @@ function omc_load_admin_scripts( $hook_suffix ) {
 	
 	// Admin js must load first
 	//omc_load_bootstrap();
-	omc_add_theme_js( OMC_JS_THEME_DIR.'/admin.js', array() );	
+	omc_add_theme_js( OMC_JS_THEME_DIR.'/admin.js', array() );
+	/*
+	omc_add_theme_js( OMC_JS_THEME_DIR.'/admin-editor.js', array() );	
+	wp_localize_script( 'admin-editor', 'ctrl_s_target',
+		array( 
+			'target' => '#post',
+		)
+	);
+	*/
 	
 	// OMC admin enqueue script Hook
 	do_action( 'omc_admin_enqueue_scripts', $hook_suffix );

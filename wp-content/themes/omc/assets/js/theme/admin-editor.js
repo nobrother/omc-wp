@@ -110,6 +110,7 @@
 	$(function(){
 		$(ctrl_s_target.target).on('submit', function(e){
 			var $this = $(this);
+			console.log($this);
 			e.preventDefault();
 			$.ajax({
 				type		: $this.attr('method'),

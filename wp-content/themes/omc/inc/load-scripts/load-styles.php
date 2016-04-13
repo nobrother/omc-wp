@@ -101,7 +101,7 @@ function omc_last_css_hook(){
  */
 add_action( 'admin_enqueue_scripts', 'omc_load_admin_styles' );
 function omc_load_admin_styles() {	
-	omc_add_theme_less( 'admin', OMC_CSS_THEME_DIR.'/others/admin.less', array() );
+	wp_enqueue_style( 'omc-admin', omc_path_to_url( OMC_CSS_THEME_DIR.'/min/admin.css' ) );
 }
 
 
